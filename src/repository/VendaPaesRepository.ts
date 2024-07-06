@@ -10,8 +10,4 @@ export class VendaPaesRepository {
     RecuperaPorId(id: number): VendaPaes | undefined {
         return this.VendaList.find(venda => venda.ID === id);
     }
-
-    ListarTodasVendas(): VendaPaes[] {
-        return this.VendaList;
-    }
 }

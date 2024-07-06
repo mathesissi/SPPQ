@@ -6,10 +6,7 @@ const vendaService = new VendasPaesService_1.VendaPaesService();
 function cadastrarVenda(req, res) {
     try {
         const novaVenda = vendaService.cadastrarVenda(req.body);
-        res.status(201).json({
-            mensagem: "Venda cadastrada com sucesso!",
-            venda: novaVenda
-        });
+        res.status(201).json(novaVenda);
     }
     catch (error) {
         res.status(400).json({ message: error.message });
@@ -18,12 +15,13 @@ function cadastrarVenda(req, res) {
 exports.cadastrarVenda = cadastrarVenda;
 function consultarVenda(req, res) {
     try {
-        const venda = vendaService.consultarVenda(parseInt(req.params.id));
-        if (venda) {
-            res.status(200).json(venda);
+        const id = parseInt(req.params.id, 10);
+        const venda = vendaService.consultarVenda(id);
+        if (!venda) {
+            res.status(404).json({ message: "Venda não encontrada" });
         }
         else {
-            res.status(404).json({ mensagem: "Venda não encontrada." });
+            res.status(200).json(venda);
         }
     }
     catch (error) {

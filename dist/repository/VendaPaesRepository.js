@@ -3,13 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VendaPaesRepository = void 0;
 class VendaPaesRepository {
     constructor() {
-        this.VendaPaesList = [];
+        this.VendaList = [];
     }
     insereVenda(venda) {
-        this.VendaPaesList.push(venda);
+        this.VendaList.push(venda);
     }
     RecuperaPorId(id) {
-        return this.VendaPaesList.find(venda => venda.ID === id);
+        return this.VendaList.find(venda => venda.ID === id);
+    }
+    ListarTodasVendas() {
+        return this.VendaList;
     }
 }
 exports.VendaPaesRepository = VendaPaesRepository;
