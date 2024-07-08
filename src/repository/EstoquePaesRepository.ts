@@ -5,29 +5,33 @@ export class EstoqueRepository{
     insereEstoque(estoque: Estoque){
         this.EstoqueList.push(estoque);
     }
-    RecuperaPorId(id: number): Estoque|undefined{
+    consultaEstoquePorId(id: number): Estoque|undefined{
         return this.EstoqueList.find(estoque =>estoque.ID === id);
+    }
+    consultaPorIDeModalidadeId(id: number, modalidadeID: number): Estoque|undefined{
+        return this.EstoqueList.find(estoque => estoque.ID === id && estoque.modalidadeID === modalidadeID);
     }
     ListarTodoEstoques():Estoque[]{
         return this.EstoqueList;
     }
     atualizaEstoque(estoque: Estoque): number {
-        const index = this.EstoqueList.findIndex(item => item.modalidadeID === estoque.modalidadeID);
+        const index = this.EstoqueList.findIndex(item => item.ID === estoque.ID);
         if (index !== -1) {
             this.EstoqueList[index] = estoque;
         }
         return index;
     }
-    deletaQuantidadeInformada(modalidadeID: number) {
-        const index = this.EstoqueList.findIndex(item => item.modalidadeID === modalidadeID);
-        if (index !== -1) {
-            this.EstoqueList.splice(index, 1);
+    deletaQuantidadeInformada(ID: number, quantidade: number): Estoque | undefined{
+        const estoque = this.consultaEstoquePorId(ID);
+        if (estoque) {
+            estoque.quantidade - quantidade;
+            return estoque;
         }
     }
     atualizaQuantidadeEstoque(ID: number, quantidade: number): Estoque | undefined {
-        const estoque = this.RecuperaPorId(ID);
+        const estoque = this.consultaEstoquePorId(ID);
         if (estoque) {
-            estoque.quantidade -= quantidade;
+            estoque.quantidade += quantidade;
             return estoque;
         }
         return undefined; 

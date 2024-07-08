@@ -12,8 +12,13 @@ export class ModalidadeService{
     
     cadastrarModalidade(modalidadeInfo: any): Modalidade{
         const { nome, vegano } = modalidadeInfo;
-        if(!nome || !vegano === undefined){
-            throw new Error("Informacoes incompletas")
+        if(typeof nome != "string" || typeof vegano != "boolean"){
+            if(nome == null || vegano == null){
+                throw new Error("Informacoes incompletas")
+            }
+            else{
+                throw new Error("Por favor, insira as informações corretamente -> nome:string e vegano: true or false")
+            } 
         }
         const modalidadeEncontrada = this.consultarModalidade(undefined, nome);
         if(modalidadeEncontrada){
@@ -25,18 +30,18 @@ export class ModalidadeService{
     }
 
     consultarModalidade(id: any, nome:any):Modalidade|undefined{
-        if(id && nome){
-            console.log("Com ID e Name");
+        if(id){
+            console.log("Consultando com ID");
+            const idNumber: number = parseInt(id, 10);
+            return this.modalidadeRepository.RecuperaPorId(idNumber);  
+      
+        }else if(id && nome){
+            console.log("Consultando com ID e nome");
             const idNumber: number = parseInt(id, 10);
             return this.modalidadeRepository.listarModalidadePorNomeId(idNumber,nome);
-            
-        }else if(id){
-            console.log("Com ID");
-            const idNumber: number = parseInt(id, 10);
-            return this.modalidadeRepository.RecuperaPorId(idNumber);
-
+          
         }else if(nome){
-            console.log("Nome");
+            console.log("Consultando com nome");
             return this.modalidadeRepository.listarModalidadePorNome(nome);
         }
         console.log(id)
@@ -64,8 +69,11 @@ export class ModalidadeService{
     atualizaModalidade(modalidadeData: any): Modalidade {
         console.log("Dados recebidos para atualização:", modalidadeData);
         const {ID, nome, vegano } = modalidadeData;
-        if(!ID || !nome || typeof vegano === 'undefined'){
+        if(!ID || !nome || typeof vegano == null){
             throw new Error("Informações incompletas");
+        }
+        if(typeof nome != "string" || typeof vegano != "boolean"){
+            throw new Error("Por favor, insira as informações corretamente -> nome:string e vegano: true or false")
         }
 
         let modalidadeEncontrada = this.consultarModalidade(ID,undefined);

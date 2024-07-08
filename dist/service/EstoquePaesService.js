@@ -13,17 +13,31 @@ class EstoqueService {
     }
     cadastrarEstoque(estoqueInfo) {
         const { ID, modalidadeID, quantidade, precoVenda } = estoqueInfo;
-        if (modalidadeID == null || quantidade == null || precoVenda == null) {
-            throw new Error("Informacoes incompletas");
+        if (typeof modalidadeID != "number" || typeof quantidade != "number" || typeof precoVenda != "number") {
+            if (modalidadeID == null || quantidade == null || precoVenda == null) {
+                throw new Error("Informacoes incompletas");
+            }
+            else {
+                throw new Error("Por favor, insira as informações corretamente -> :modalidadeID, quantidade, precoVenda = number");
+            }
+        }
+        if (quantidade < 0) {
+            throw new Error("Quantidade possui um valor negativo");
+        }
+        const estoqueEncontrado = this.consultarEstoque(modalidadeID);
+        if (estoqueEncontrado) {
+            throw new Error("Já existe um estoque para essa modalidade");
         }
         const novoEstoque = new EstoquePaes_1.Estoque(gerarId(), modalidadeID, quantidade, precoVenda);
         this.estoqueRepository.insereEstoque(novoEstoque);
         return novoEstoque;
     }
     consultarEstoque(id) {
-        console.log("consultando ID: ", id);
         const idNumber = parseInt(id, 10);
-        return this.estoqueRepository.RecuperaPorId(idNumber);
+        return this.estoqueRepository.consultaEstoquePorId(idNumber);
+    }
+    consultarPorIDeModalidadeId(id, modalidadeID) {
+        return this.estoqueRepository.consultaPorIDeModalidadeId(id, modalidadeID);
     }
     getEstoque(ordem) {
         if (ordem === "desc") {
@@ -32,16 +46,21 @@ class EstoqueService {
         return this.estoqueRepository.ListarTodoEstoques().sort((a, b) => b.ID - a.ID);
     }
     atualizaQuantidadeEmEstoque(id, quantidade) {
-        const estoque = this.estoqueRepository.RecuperaPorId(id);
+        const estoque = this.estoqueRepository.consultaEstoquePorId(id);
         if (!estoque) {
             throw new Error("Estoque não encontrado");
         }
-        estoque.quantidade += quantidade;
-        this.estoqueRepository.atualizaEstoque(estoque);
-        return estoque;
+        if (quantidade < 0) {
+            throw new Error("A função requer um numero positivo, acima de 0");
+        }
+        else {
+            estoque.quantidade += quantidade;
+            this.estoqueRepository.atualizaEstoque(estoque);
+            return estoque;
+        }
     }
     atualizaEstoque(ID, modalidadeID, quantidade, precoVenda) {
-        const estoque = this.estoqueRepository.RecuperaPorId(ID);
+        const estoque = this.estoqueRepository.consultaEstoquePorId(ID);
         if (!estoque) {
             throw new Error("Estoque não encontrado");
         }
@@ -52,7 +71,7 @@ class EstoqueService {
         return estoque;
     }
     deletarQuantidadeEmEstoque(id, quantidadeASubtrair) {
-        const estoque = this.estoqueRepository.RecuperaPorId(id);
+        const estoque = this.estoqueRepository.consultaEstoquePorId(id);
         if (!estoque) {
             throw new Error("Estoque não encontrado");
         }
@@ -63,7 +82,7 @@ class EstoqueService {
             throw new Error("A quantidade a subtrair é maior que a quantidade disponível no estoque.");
         }
         estoque.quantidade -= quantidadeASubtrair;
-        this.estoqueRepository.atualizaQuantidadeEstoque(estoque.ID, quantidadeASubtrair);
+        this.estoqueRepository.deletaQuantidadeInformada(estoque.ID, quantidadeASubtrair);
         return estoque;
     }
 }
