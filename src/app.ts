@@ -7,11 +7,11 @@ const PORT = process.env.PORT ?? 3050;
 const app = express();
 app.use(express.json());
 
-function lofInfo(){
+function logInfo(){
     console.log(`API em execucao no URL: http:localhost:?${PORT}`);
 }
 
-app.listen(PORT, lofInfo);
+app.listen(PORT, logInfo);
 
 app.get("/api/modalidade/todas", listaModalidade);
 app.post("/api/modalidade", cadastrarModalidade);

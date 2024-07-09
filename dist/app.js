@@ -11,10 +11,10 @@ const EstoqueController_1 = require("./controller/EstoqueController");
 const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3050;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-function lofInfo() {
+function logInfo() {
     console.log(`API em execucao no URL: http:localhost:?${PORT}`);
 }
-app.listen(PORT, lofInfo);
+app.listen(PORT, logInfo);
 app.get("/api/modalidade/todas", ModalidadePaesController_1.listaModalidade);
 app.post("/api/modalidade", ModalidadePaesController_1.cadastrarModalidade);
 app.put("/api/modalidade", ModalidadePaesController_1.atualizarModalidade);

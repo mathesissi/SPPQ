@@ -76,10 +76,10 @@ class EstoqueService {
             throw new Error("Estoque não encontrado");
         }
         if (quantidadeASubtrair <= 0) {
-            throw new Error("SUBTRAIR 0 quantidades??");
+            throw new Error("Voce precisa inserir uma quantidade valida");
         }
         if (quantidadeASubtrair > estoque.quantidade) {
-            throw new Error("A quantidade a subtrair é maior que a quantidade disponível no estoque.");
+            throw new Error("A quantidade a subtrair precisa maior que a quantidade disponivel no estoque.");
         }
         estoque.quantidade -= quantidadeASubtrair;
         this.estoqueRepository.deletaQuantidadeInformada(estoque.ID, quantidadeASubtrair);
