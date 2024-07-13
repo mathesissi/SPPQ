@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EstoqueRepository = void 0;
+const database_1 = require("../global/database");
 class EstoqueRepository {
     constructor() {
-        this.EstoqueList = [];
+        this.EstoqueList = (0, database_1.getEstoqueList)();
     }
     insereEstoque(estoque) {
         this.EstoqueList.push(estoque);

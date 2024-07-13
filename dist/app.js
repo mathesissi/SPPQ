@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const ModalidadePaesController_1 = require("./controller/ModalidadePaesController");
 const EstoqueController_1 = require("./controller/EstoqueController");
-// import { cadastrarVenda, consultarVenda } from "./controller/VendasPaesController";
+//import{ cadastrarVenda, consultarVenda } from "./controller/VendasPaesController";
 const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3050;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());

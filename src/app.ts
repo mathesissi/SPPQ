@@ -1,7 +1,7 @@
 import express from "express";
 import { cadastrarModalidade, atualizarModalidade, deletarModalidade, pesquisarModalidade, listaModalidade} from "./controller/ModalidadePaesController";
 import { cadastrarEstoque, atualizaQuantidadeEstoque, deletarQuantidadeEmEstoque, RecuperaPorId, ListarTodoEstoques } from "./controller/EstoqueController";
-// import { cadastrarVenda, consultarVenda } from "./controller/VendasPaesController";
+//import{ cadastrarVenda, consultarVenda } from "./controller/VendasPaesController";
 const PORT = process.env.PORT ?? 3050;
 
 const app = express();

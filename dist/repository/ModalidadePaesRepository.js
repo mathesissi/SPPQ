@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModalidadeRepository = void 0;
+const database_1 = require("../global/database");
 class ModalidadeRepository {
     constructor() {
-        this.ModalidadeList = [];
+        this.ModalidadeList = (0, database_1.getModalidadeList)();
     }
     insereModalidade(modalidade) {
         this.ModalidadeList.push(modalidade);

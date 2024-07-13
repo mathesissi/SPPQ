@@ -1,4 +1,6 @@
 import { Estoque } from "../model/EstoquePaes";
+import { Modalidade } from "../model/ModalidadePaes";
+import { ModalidadeRepository } from "../repository/ModalidadePaesRepository";
 import { EstoqueRepository } from "../repository/EstoquePaesRepository";
 
 let currentId = 1;
@@ -8,6 +10,7 @@ function gerarId(): number {
 }
 export class EstoqueService{
     estoqueRepository: EstoqueRepository = new EstoqueRepository();
+    modalidadeRepository: ModalidadeRepository = new  ModalidadeRepository();
 
     cadastrarEstoque(estoqueInfo: any): Estoque{
         const {ID, modalidadeID, quantidade, precoVenda} = estoqueInfo;
@@ -22,7 +25,11 @@ export class EstoqueService{
         if (quantidade < 0){
             throw new Error("Quantidade possui um valor negativo");
         }
-        const estoqueEncontrado = this.consultarEstoque(modalidadeID)
+        const modalidadeEncontrado = this.encontrarModalidadeId(modalidadeID);
+        if (!modalidadeEncontrado){
+            throw new Error("Modalidade não encontrada");
+        }
+        const estoqueEncontrado = this.consultarEstoque(modalidadeID);
         if(estoqueEncontrado){
             throw new Error("Já existe um estoque para essa modalidade")
         }
@@ -36,6 +43,9 @@ export class EstoqueService{
     }
     consultarPorIDeModalidadeId(id:number, modalidadeID: number): Estoque | undefined{
         return this.estoqueRepository.consultaPorIDeModalidadeId(id, modalidadeID)
+    }
+    encontrarModalidadeId(modalidadeID: number): Modalidade|undefined{
+        return this.modalidadeRepository.RecuperaPorId(modalidadeID);
     }
     getEstoque(ordem:any):Estoque[]{
         if(ordem === "desc"){

@@ -1,6 +1,8 @@
+import { getEstoqueList } from "../global/database";
 import { Estoque } from "../model/EstoquePaes";
+    
 export class EstoqueRepository{
-    EstoqueList: Estoque[] = []
+    EstoqueList: Estoque[] = getEstoqueList();
 
     insereEstoque(estoque: Estoque){
         this.EstoqueList.push(estoque);

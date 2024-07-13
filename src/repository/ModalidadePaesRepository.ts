@@ -1,7 +1,8 @@
+import { getModalidadeList } from "../global/database";
 import { Modalidade } from "../model/ModalidadePaes";
 
 export class ModalidadeRepository{
-    ModalidadeList: Modalidade[] = [];
+    ModalidadeList: Modalidade[] = getModalidadeList();
 
     insereModalidade(modalidade: Modalidade){
         this.ModalidadeList.push(modalidade);

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EstoqueService = void 0;
 const EstoquePaes_1 = require("../model/EstoquePaes");
+const ModalidadePaesRepository_1 = require("../repository/ModalidadePaesRepository");
 const EstoquePaesRepository_1 = require("../repository/EstoquePaesRepository");
 let currentId = 1;
 function gerarId() {
@@ -10,6 +11,7 @@ function gerarId() {
 class EstoqueService {
     constructor() {
         this.estoqueRepository = new EstoquePaesRepository_1.EstoqueRepository();
+        this.modalidadeRepository = new ModalidadePaesRepository_1.ModalidadeRepository();
     }
     cadastrarEstoque(estoqueInfo) {
         const { ID, modalidadeID, quantidade, precoVenda } = estoqueInfo;
@@ -23,6 +25,10 @@ class EstoqueService {
         }
         if (quantidade < 0) {
             throw new Error("Quantidade possui um valor negativo");
+        }
+        const modalidadeEncontrado = this.encontrarModalidadeId(modalidadeID);
+        if (!modalidadeEncontrado) {
+            throw new Error("Modalidade não encontrada");
         }
         const estoqueEncontrado = this.consultarEstoque(modalidadeID);
         if (estoqueEncontrado) {
@@ -38,6 +44,9 @@ class EstoqueService {
     }
     consultarPorIDeModalidadeId(id, modalidadeID) {
         return this.estoqueRepository.consultaPorIDeModalidadeId(id, modalidadeID);
+    }
+    encontrarModalidadeId(modalidadeID) {
+        return this.modalidadeRepository.RecuperaPorId(modalidadeID);
     }
     getEstoque(ordem) {
         if (ordem === "desc") {
