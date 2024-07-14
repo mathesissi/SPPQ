@@ -14,7 +14,7 @@ class ModalidadeService {
     cadastrarModalidade(modalidadeInfo) {
         const { nome, vegano } = modalidadeInfo;
         if (typeof nome != "string" || typeof vegano != "boolean") {
-            if (nome == null || vegano == null) {
+            if (!nome || !vegano) {
                 throw new Error("Informacoes incompletas");
             }
             else {

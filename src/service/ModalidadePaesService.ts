@@ -7,21 +7,21 @@ function gerarId(): number {
     return currentId++;
 }
 
-export class ModalidadeService{
+export class ModalidadeService {
     modalidadeRepository: ModalidadeRepository = new ModalidadeRepository();
-    
-    cadastrarModalidade(modalidadeInfo: any): Modalidade{
+
+    cadastrarModalidade(modalidadeInfo: any): Modalidade {
         const { nome, vegano } = modalidadeInfo;
-        if(typeof nome != "string" || typeof vegano != "boolean"){
-            if(nome == null || vegano == null){
+        if (typeof nome != "string" || typeof vegano != "boolean") {
+            if (!nome || !vegano) {
                 throw new Error("Informacoes incompletas")
             }
-            else{
+            else {
                 throw new Error("Por favor, insira as informações corretamente -> nome:string e vegano: true or false")
-            } 
+            }
         }
         const modalidadeEncontrada = this.consultarModalidade(undefined, nome);
-        if(modalidadeEncontrada){
+        if (modalidadeEncontrada) {
             throw new Error("Modalidade já cadastrada!");
         }
         const novaModalidade = new Modalidade(gerarId(), nome, vegano);
@@ -29,18 +29,18 @@ export class ModalidadeService{
         return novaModalidade;
     }
 
-    consultarModalidade(id: any, nome:any):Modalidade|undefined{
-        if(id){
+    consultarModalidade(id: any, nome: any): Modalidade | undefined {
+        if (id) {
             console.log("Consultando com ID");
             const idNumber: number = parseInt(id, 10);
-            return this.modalidadeRepository.RecuperaPorId(idNumber);  
-      
-        }else if(id && nome){
+            return this.modalidadeRepository.RecuperaPorId(idNumber);
+
+        } else if (id && nome) {
             console.log("Consultando com ID e nome");
             const idNumber: number = parseInt(id, 10);
-            return this.modalidadeRepository.listarModalidadePorNomeId(idNumber,nome);
-          
-        }else if(nome){
+            return this.modalidadeRepository.listarModalidadePorNomeId(idNumber, nome);
+
+        } else if (nome) {
             console.log("Consultando com nome");
             return this.modalidadeRepository.listarModalidadePorNome(nome);
         }
@@ -48,11 +48,11 @@ export class ModalidadeService{
         return undefined;
     }
 
-    getModalidade(ordem:any):Modalidade[]{
-        if(ordem === "desc"){
-            return this.modalidadeRepository.listarTodasModalidades().sort((a,b) => b.ID - a.ID);
+    getModalidade(ordem: any): Modalidade[] {
+        if (ordem === "desc") {
+            return this.modalidadeRepository.listarTodasModalidades().sort((a, b) => b.ID - a.ID);
         }
-        return this.modalidadeRepository.listarTodasModalidades().sort((a,b) => a.ID - b.ID);
+        return this.modalidadeRepository.listarTodasModalidades().sort((a, b) => a.ID - b.ID);
     }
 
 
@@ -68,21 +68,21 @@ export class ModalidadeService{
     }
     atualizaModalidade(modalidadeData: any): Modalidade {
         console.log("Dados recebidos para atualização:", modalidadeData);
-        const {ID, nome, vegano } = modalidadeData;
-        if(!ID || !nome || typeof vegano == null){
+        const { ID, nome, vegano } = modalidadeData;
+        if (!ID || !nome || typeof vegano == null) {
             throw new Error("Informações incompletas");
         }
-        if(typeof nome != "string" || typeof vegano != "boolean"){
+        if (typeof nome != "string" || typeof vegano != "boolean") {
             throw new Error("Por favor, insira as informações corretamente -> nome:string e vegano: true or false")
         }
 
-        let modalidadeEncontrada = this.consultarModalidade(ID,undefined);
-        if(!modalidadeEncontrada){
+        let modalidadeEncontrada = this.consultarModalidade(ID, undefined);
+        if (!modalidadeEncontrada) {
             throw new Error("Modalidade não cadastrada!");
         }
         modalidadeEncontrada.ID = ID;
         modalidadeEncontrada.nome = nome;
-        modalidadeEncontrada.vegano =vegano;
+        modalidadeEncontrada.vegano = vegano;
         this.modalidadeRepository.atualizaModalidade(modalidadeEncontrada);
         return modalidadeEncontrada;
     }

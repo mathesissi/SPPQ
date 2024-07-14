@@ -20,7 +20,7 @@ class EstoqueService {
                 throw new Error("Informacoes incompletas");
             }
             else {
-                throw new Error("Por favor, insira as informações corretamente -> :modalidadeID, quantidade, precoVenda = number");
+                throw new Error("Por favor, insira as informações corretamente -> modalidadeID:number, quantidade:number, precoVenda:number");
             }
         }
         if (quantidade < 0) {
