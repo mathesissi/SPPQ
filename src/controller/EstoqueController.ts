@@ -3,30 +3,40 @@ import { EstoqueService } from "../service/EstoquePaesService";
 
 const estoqueService = new EstoqueService();
 
-export function cadastrarEstoque(req: Request, res: Response){
-    try{
+export function cadastrarEstoque(req: Request, res: Response) {
+    try {
         const novoEstoque = estoqueService.cadastrarEstoque(req.body);
         res.status(201).json(
             {
-                mensagem:"Item adcionado ao estoque com sucesso!"
+                mensagem: "Item adcionado ao estoque com sucesso!"
             }
         );
-    }catch (error: any){
-        res.status(400).json({ message: error.message});
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
     }
 }
-export function ListarTodoEstoques(req: Request, res: Response){
+export function ListarTodoEstoques(req: Request, res: Response) {
     try {
         res.status(200).json(estoqueService.getEstoque(req.query.ordem));
     } catch (error: any) {
-        res.status(400).json({ message: error.message});
+        res.status(400).json({ message: error.message });
     }
 }
-export function RecuperaPorId(req: Request, res: Response){
+export function RecuperaPorId(req: Request, res: Response) {
     try {
-        res.status(200).json(estoqueService.getEstoque(req.query.ordem));
+        const estoque = estoqueService.consultarEstoque(req.query.ID);
+        if (estoque) {
+            res.status(200).json(
+                {
+                    mensagem: "Estoque encontrado com sucesso!",
+                    estoque: estoque
+                }
+            );
+        } else {
+            res.status(404).json({ menssagem: "Estoque não encontrado" });
+        }
     } catch (error: any) {
-        res.status(400).json({ message: error.message});
+        res.status(400).json({ message: error.message });
     }
 }
 export function atualizaQuantidadeEstoque(req: Request, res: Response) {

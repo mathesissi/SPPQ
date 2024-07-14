@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listaModalidade = exports.pesquisarModalidade = exports.deletarModalidade = exports.atualizarModalidade = exports.cadastrarModalidade = void 0;
+exports.listarModalidades = exports.pesquisarModalidade = exports.deletarModalidade = exports.atualizarModalidade = exports.cadastrarModalidade = void 0;
 const ModalidadePaesService_1 = require("../service/ModalidadePaesService");
 const modalidadeService = new ModalidadePaesService_1.ModalidadeService();
 function cadastrarModalidade(req, res) {
@@ -57,7 +57,7 @@ function pesquisarModalidade(req, res) {
     }
 }
 exports.pesquisarModalidade = pesquisarModalidade;
-function listaModalidade(req, res) {
+function listarModalidades(req, res) {
     try {
         res.status(200).json(modalidadeService.getModalidade(req.query.ordem));
     }
@@ -65,4 +65,4 @@ function listaModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.listaModalidade = listaModalidade;
+exports.listarModalidades = listarModalidades;

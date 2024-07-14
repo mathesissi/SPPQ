@@ -26,7 +26,16 @@ function ListarTodoEstoques(req, res) {
 exports.ListarTodoEstoques = ListarTodoEstoques;
 function RecuperaPorId(req, res) {
     try {
-        res.status(200).json(estoqueService.getEstoque(req.query.ordem));
+        const estoque = estoqueService.consultarEstoque(req.query.ID);
+        if (estoque) {
+            res.status(200).json({
+                mensagem: "Estoque encontrado com sucesso!",
+                estoque: estoque
+            });
+        }
+        else {
+            res.status(404).json({ menssagem: "Estoque não encontrado" });
+        }
     }
     catch (error) {
         res.status(400).json({ message: error.message });

@@ -67,7 +67,8 @@ class VendaPaesService {
         return true;
     }
     consultarVenda(id) {
-        return this.vendaPaesRepository.consultaVendaPorId(id);
+        const idNumber = parseInt(id, 10);
+        return this.vendaPaesRepository.consultaVendaPorId(idNumber);
     }
 }
 exports.VendaPaesService = VendaPaesService;

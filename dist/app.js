@@ -15,7 +15,7 @@ function logInfo() {
     console.log(`API em execucao no URL: http:localhost:?${PORT}`);
 }
 app.listen(PORT, logInfo);
-app.get("/api/modalidade/todas", ModalidadePaesController_1.listaModalidade);
+app.get("/api/modalidade/todas", ModalidadePaesController_1.listarModalidades);
 app.post("/api/modalidade", ModalidadePaesController_1.cadastrarModalidade);
 app.put("/api/modalidade", ModalidadePaesController_1.atualizarModalidade);
 app.delete("/api/modalidade", ModalidadePaesController_1.deletarModalidade);

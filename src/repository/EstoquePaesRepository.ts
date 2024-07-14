@@ -1,19 +1,19 @@
 import { getEstoqueList } from "../global/database";
 import { Estoque } from "../model/EstoquePaes";
-    
-export class EstoqueRepository{
+
+export class EstoqueRepository {
     EstoqueList: Estoque[] = getEstoqueList();
 
-    insereEstoque(estoque: Estoque){
+    insereEstoque(estoque: Estoque) {
         this.EstoqueList.push(estoque);
     }
-    consultaEstoquePorId(id: number): Estoque|undefined{
-        return this.EstoqueList.find(estoque =>estoque.ID === id);
+    consultaEstoquePorId(id: number): Estoque | undefined {
+        return this.EstoqueList.find(estoque => estoque.ID === id);
     }
-    consultaPorIDeModalidadeId(id: number, modalidadeID: number): Estoque|undefined{
+    consultaPorIDeModalidadeId(id: number, modalidadeID: number): Estoque | undefined {
         return this.EstoqueList.find(estoque => estoque.ID === id && estoque.modalidadeID === modalidadeID);
     }
-    ListarTodoEstoques():Estoque[]{
+    ListarEstoques(): Estoque[] {
         return this.EstoqueList;
     }
     atualizaEstoque(estoque: Estoque): number {
@@ -23,7 +23,7 @@ export class EstoqueRepository{
         }
         return index;
     }
-    deletaQuantidadeInformada(ID: number, quantidade: number): Estoque | undefined{
+    deletaQuantidadeInformada(ID: number, quantidade: number): Estoque | undefined {
         const estoque = this.consultaEstoquePorId(ID);
         if (estoque) {
             estoque.quantidade - quantidade;
@@ -36,6 +36,6 @@ export class EstoqueRepository{
             estoque.quantidade += quantidade;
             return estoque;
         }
-        return undefined; 
+        return undefined;
     }
 }

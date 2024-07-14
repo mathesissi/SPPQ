@@ -50,9 +50,9 @@ class EstoqueService {
     }
     getEstoque(ordem) {
         if (ordem === "desc") {
-            return this.estoqueRepository.ListarTodoEstoques().sort((a, b) => b.ID - a.ID);
+            return this.estoqueRepository.ListarEstoques().sort((a, b) => b.ID - a.ID);
         }
-        return this.estoqueRepository.ListarTodoEstoques().sort((a, b) => b.ID - a.ID);
+        return this.estoqueRepository.ListarEstoques().sort((a, b) => b.ID - a.ID);
     }
     atualizaQuantidadeEmEstoque(id, quantidade) {
         const estoque = this.estoqueRepository.consultaEstoquePorId(id);

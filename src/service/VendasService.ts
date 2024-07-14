@@ -67,7 +67,8 @@ export class VendaPaesService {
         return true;
     }
 
-    consultarVenda(id: number): VendaPaes | undefined {
-        return this.vendaPaesRepository.consultaVendaPorId(id);
+    consultarVenda(id: any): VendaPaes | undefined {
+        const idNumber: number = parseInt(id, 10);
+        return this.vendaPaesRepository.consultaVendaPorId(idNumber);
     }
 }

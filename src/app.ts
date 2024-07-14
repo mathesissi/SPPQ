@@ -1,5 +1,5 @@
 import express from "express";
-import { cadastrarModalidade, atualizarModalidade, deletarModalidade, pesquisarModalidade, listaModalidade } from "./controller/ModalidadePaesController";
+import { cadastrarModalidade, atualizarModalidade, deletarModalidade, pesquisarModalidade, listarModalidades } from "./controller/ModalidadePaesController";
 import { cadastrarEstoque, atualizaQuantidadeEstoque, deletarQuantidadeEmEstoque, RecuperaPorId, ListarTodoEstoques } from "./controller/EstoqueController";
 import { cadastrarVenda, consultarVenda } from "./controller/VendasController";
 const PORT = process.env.PORT ?? 3050;
@@ -13,7 +13,7 @@ function logInfo() {
 
 app.listen(PORT, logInfo);
 
-app.get("/api/modalidade/todas", listaModalidade);
+app.get("/api/modalidade/todas", listarModalidades);
 app.post("/api/modalidade", cadastrarModalidade);
 app.put("/api/modalidade", atualizarModalidade);
 app.delete("/api/modalidade", deletarModalidade);

@@ -15,7 +15,7 @@ class EstoqueRepository {
     consultaPorIDeModalidadeId(id, modalidadeID) {
         return this.EstoqueList.find(estoque => estoque.ID === id && estoque.modalidadeID === modalidadeID);
     }
-    ListarTodoEstoques() {
+    ListarEstoques() {
         return this.EstoqueList;
     }
     atualizaEstoque(estoque) {
